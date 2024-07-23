@@ -24,10 +24,20 @@ export interface Post {
 
 export default function SearchResult() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query') || '';
-  const categoryId = searchParams.get('categoryId') || '';
-  const [searchQuery, setSearchQuery] = useState(query);
+  const [searchQuery, setSearchQuery] = useState('');
+  // const searchParams = useSearchParams();
+  useEffect(() => {
+    // 获取 URL 查询参数
+    const queryParams = new URLSearchParams(window.location.search);
+    const query = queryParams.get('query') || '';
+    // alert(query);
+    setSearchQuery(query);
+    const categoryId = queryParams.get('categoryId') || '';
+    //console.log('Search Term:', searchTerm); // 输出查询参数的值到控制台
+  }, []);
+  //const query = 'a'; //searchParams.get('query') || '';
+  const categoryId = ''; //searchParams.get('categoryId') || '';
+  
 
   const [posts, setPosts] = useState<Post[]>([]);
   const initialized = useRef(false);
@@ -59,11 +69,11 @@ export default function SearchResult() {
   };
   const handleQueryChange = (query: string) => {
     setSearchQuery(query);
-    //router.push(`/searchresults`);
   };
   function handleSubmit(event: any) {
     event.preventDefault();
     searchPosts(searchQuery, '');
+    router.push(`/searchresults`);
   }
   const categorySelect = async (categoryId: number, categoryName: string) => {
     searchPosts(searchQuery, '' + categoryId);

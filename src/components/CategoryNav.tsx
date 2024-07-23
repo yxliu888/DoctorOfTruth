@@ -14,11 +14,11 @@ interface Category {
 }
 
 interface CategoryNavProps {
-  category_Id: number;
+  // category_Id: number;
   onCategorySelect: (categoryId: number, categoryName: string) => void;
 }
 
-const CategoryNav = ({ category_Id, onCategorySelect }: CategoryNavProps) => {
+const CategoryNav = ({ onCategorySelect }: CategoryNavProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [expandedCategories, setExpandedCategories] = useState<number[]>([]);
 
