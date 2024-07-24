@@ -41,15 +41,18 @@ const CommentComponent: React.FC<CommentProps> = ({ postId, comment }: CommentPr
 	<div className="wp-block-group is-layout-flow wp-block-group-is-layout-flow" >
 		<div className="wp-block-group is-nowrap is-layout-flex wp-container-core-group-is-layout-11 wp-block-group-is-layout-flex">
 			<div className="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-				<div className="wp-block-comment-author-name">{curComment.author_name}</div>
+				<div className="font-semibold">{curComment.author_name}</div>
 				<div className="wp-block-comment-date">{formatDate(comment.date)}</div>
 			</div>
 		</div>
 		<div className="comment-content" dangerouslySetInnerHTML={{ __html: curComment.content.rendered }} />
 	</div>
-  <button onClick={showingReplyBox}>回复</button>
+  { showReplyBox ? 
+    (<button className='text-gray-600' onClick={cancelReplyBox}>Cancel Reply</button>) : 
+    (<button className='text-gray-600' onClick={showingReplyBox}>Reply</button>)
+  }
   { showReplyBox && (
-    <AddComment postId={postId} commentParent={comment.id.toString()} updateComments={updateComments} cancelReplyBox={cancelReplyBox}/>)
+    <AddComment postId={postId} commentParent={comment.id.toString()} updateComments={updateComments} author={curComment.author_name}/>)
 }
   {childrenComment && (
     <div className="comment-children">

@@ -42,14 +42,14 @@ interface CommentProps {
 export default function Comments({ postId }: CommentProps) {
   //const { postId } = params;
   const [comments, setComments] = useState<Comment[]>([]);
-  const [showReplyBox, setShowReplyBox] = useState(false);
+  // const [showReplyBox, setShowReplyBox] = useState(false);
 
-  const showingReplyBox = () => {
-    setShowReplyBox(true);
-  };
-  const cancelReplyBox = () => {
-    setShowReplyBox(false);
-  };
+  // const showingReplyBox = () => {
+  //   setShowReplyBox(true);
+  // };
+  // const cancelReplyBox = () => {
+  //   setShowReplyBox(false);
+  // };
 
   useEffect(() => {
     fetchComment();
@@ -83,7 +83,7 @@ export default function Comments({ postId }: CommentProps) {
     <div>
       {/* <button className="mt-8 mb-4 font-semibold" onClick={showingReplyBox}>发表评论</button>
       {showReplyBox && ( */}
-      <AddComment postId={postId} commentParent='0' updateComments={updateComments} cancelReplyBox={cancelReplyBox}/>
+      <AddComment postId={postId} commentParent='0' updateComments={updateComments}/>
       {/* } */}
       {comments.map((comment: any) => (
           <CommentComponent key={comment.id} postId={postId} comment={comment} />

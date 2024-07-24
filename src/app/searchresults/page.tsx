@@ -32,8 +32,9 @@ export default function SearchResult() {
       initialized.current = true;
       const queryParams = new URLSearchParams(window.location.search);
       const query = queryParams.get('query') || '';
+      const categoryId = queryParams.get('categoryId') || '';
       setSearchQuery(query);
-      searchPosts(query, '');
+      searchPosts(query, categoryId);
     }
   }, []);
   const searchPosts = async (searchQuery: string, categoryId: string) => {
@@ -45,7 +46,6 @@ export default function SearchResult() {
         postsRes = await api.get(`wp/v2/posts?search=${searchQuery}&categories=${categoryId}`);
       }
       const postsData = postsRes.data;
-      alert(searchQuery + postsRes.data.length);
       // Fetch authors data for each post
       const authorPromises = postsData.map(async (post: Post) => {
         const authorRes = await api.get(`wp/v2/users/${post.author}`);
