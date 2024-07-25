@@ -16,6 +16,11 @@ export default function AddComment({ postId, commentParent, updateComments, auth
     const post = postId; // formData.get('comment_post_ID') as string;
     const authorName = formData.get('authorName') as string;
     const authorEmail = formData.get('authorEmail') as string;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(authorEmail)) {
+      alert('Invalid email format!');
+      return;
+    }
     const data = {
       content: content, // 评论内容
       post: post, // 所属文章ID
@@ -50,11 +55,11 @@ export default function AddComment({ postId, commentParent, updateComments, auth
         {/* <div className="flex flex-wrap -mx-3 mb-1"> */}
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <input className="appearance-none block w-full bg-gray-0 text-gray-700 border border-gray-400 rounded py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" 
-                id="authorName" name="authorName" type="text" placeholder="Name"></input>
+                id="authorName" name="authorName" type="text" placeholder="Name" required={true}></input>
             </div>
             <div className="w-full md:w-1/2 px-3 mb-3">
                 <input className="appearance-none block w-full bg-gray-0 text-grey-darker border border-gray-400 rounded py-1 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600" 
-                id="authorEmail" name="authorEmail" type="text" placeholder="Email"></input>
+                id="authorEmail" name="authorEmail" type="text" placeholder="Email" required={true}></input>
             </div>
         {/* </div> */}
         <textarea id="content" name="content"

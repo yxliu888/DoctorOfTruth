@@ -96,7 +96,7 @@ const CategoryNav = ({ onCategorySelect }: CategoryNavProps) => {
               </svg>
             </span>
             <span
-              className="text-sm cursor-pointer"
+              className="text-lg cursor-pointer"
               onClick={() => toggleCategory(category)}
               style={{ marginLeft: '4px' }} // 调整标题和图标之间的间距
             >
@@ -113,7 +113,7 @@ const CategoryNav = ({ onCategorySelect }: CategoryNavProps) => {
   };
 
   return (
-    <nav className="w-1/6 p-4 bg-gray-100 text-black">
+    <nav className="w-1/6 p-4 bg-gray-100 text-black shadow-md ">
       <ul>
         {categories.length > 0 ? (
           renderCategories(0) // Start with top-level categories (parent id is 0)

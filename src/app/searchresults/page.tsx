@@ -71,15 +71,15 @@ export default function SearchResult() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar query={searchQuery} onQueryChange={handleQueryChange} handleSubmit={handleSubmit} />
-      <main className="flex flex-1 bg-white">
+      <main className="flex flex-1 bg-#f8fafc">
         <CategoryNav onCategorySelect={categorySelect}/>
-        <div className="w-full max-w-4xl">
-          <h2 className="text-xl font-semibold mb-4">Search Results:</h2>
+        <div className="w-full max-w-4xl p-6 ">
+          <h1 className="text-4xl font-semibold mb-4">Search Results:</h1>
           {posts.length > 0 ? (
-            <ul className="list-disc pl-5">
+            <ul className="list-disc pl-5 ">
               {posts.map(post => (
                  <Link key={post.id} href={`/papers/${post.id}`} passHref>
-                  <div className='w-full lg:flex lg:mx-2 md:mx-2'>
+                  <div className='w-full lg:flex lg:mx-2 md:mx-2 h-22'>
                    {post.featured_media ? (
                      <div className="aspect-w-10 aspect-h-6">
                        <Image
@@ -103,18 +103,19 @@ export default function SearchResult() {
                       />
                     </div>
                    )}
-                   <div>
-                    <h2 className="text-1xl font-bold text-gray-900 group-hover:text-blue-600">{post.title.rendered}</h2>
-                    <p>{ post.author_name }</p>
-                    <p>{post.date}</p>
-                   </div>
-                
+                    <div className='ml-4'>
+                      <h2 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 h-8">{post.title.rendered}</h2>
+                        <div className='flex flex-col justify-end h-12 text-right'>
+                          <p>{ post.author_name }</p>
+                          <p>{ post.date }</p>
+                        </div>
+                    </div>
                   </div>
                </Link>
               ))}
             </ul>
           ) : (
-            <p>No results found.</p>
+            <p className='text-xl p-2'>No results found.</p>
           )}
         </div>
       </main>

@@ -78,7 +78,7 @@ export default function PaperPage({params}: any) {
             </div>
           }
           <div className="border-t border-gray-400 mt-10"></div>
-          <div className="flex items-center justify-center font-semibold mb-8">
+          <div className="flex items-center justify-center font-semibold mb-8 mt-20">
             <div>Comments</div>
           </div>
           <div className="md:justify-between">
