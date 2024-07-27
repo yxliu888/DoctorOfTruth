@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://54.91.90.2:8081/wp-json/',
+    baseURL: 'http://localhost:8081/wp-json/',
     // baseURL: 'http://localhost:8081/wordpress/wp-json/',
   // 其他配置...
 });

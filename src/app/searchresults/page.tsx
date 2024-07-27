@@ -25,8 +25,10 @@ export interface Post {
 export default function SearchResult() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchCategoryId, setSearchCategoryId] = useState('');
   const [posts, setPosts] = useState<Post[]>([]);
   const initialized = useRef(false);
+  const [page, setPage] = useState(1);
   useEffect(() => {
     if (! initialized.current){
       initialized.current = true;
@@ -34,16 +36,17 @@ export default function SearchResult() {
       const query = queryParams.get('query') || '';
       const categoryId = queryParams.get('categoryId') || '';
       setSearchQuery(query);
-      searchPosts(query, categoryId);
+      setSearchCategoryId(categoryId);
+      searchPosts(query, categoryId, 1);
     }
   }, []);
-  const searchPosts = async (searchQuery: string, categoryId: string) => {
+  const searchPosts = async (searchQuery: string, categoryId: string, newPage: number) => {
     try {
       let postsRes: any;
       if (categoryId == ''){
-        postsRes = await api.get(`wp/v2/posts?search=${searchQuery}`);
+        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=2&search=${searchQuery}`);
       } else {
-        postsRes = await api.get(`wp/v2/posts?search=${searchQuery}&categories=${categoryId}`);
+        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=2&search=${searchQuery}&categories=${categoryId}`);
       }
       const postsData = postsRes.data;
       // Fetch authors data for each post
@@ -59,15 +62,23 @@ export default function SearchResult() {
   };
   const handleQueryChange = (query: string) => {
     setSearchQuery(query);
+    setSearchCategoryId('');
   };
   function handleSubmit(event: any) {
     event.preventDefault();
-    searchPosts(searchQuery, '');
+    searchPosts(searchQuery, '', 1);
     router.push(`/searchresults`);
   }
   const categorySelect = async (categoryId: number, categoryName: string) => {
-    searchPosts('', '' + categoryId);
+    setSearchQuery('');
+    setSearchCategoryId('' + categoryId);
+    searchPosts('', '' + categoryId, 1);
   }
+
+  const handlePageChange = async (newPage: number) => {
+    setPage(newPage);
+    searchPosts(searchQuery, searchCategoryId, newPage);
+  };
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar query={searchQuery} onQueryChange={handleQueryChange} handleSubmit={handleSubmit} />
@@ -113,7 +124,14 @@ export default function SearchResult() {
                   </div>
                </Link>
               ))}
+                <div>
+                  {page > 1 && (
+                    <button onClick={() => handlePageChange(page - 1)}>Previous</button>
+                  )}
+                  <button onClick={() => handlePageChange(page + 1)}>Next</button>
+                </div>
             </ul>
+
           ) : (
             <p className='text-xl p-2'>No results found.</p>
           )}
