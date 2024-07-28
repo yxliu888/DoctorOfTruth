@@ -18,7 +18,7 @@ export default function SearchPage() {
       <header className="w-full flex justify-between items-center p-4 bg-white shadow-md">
         <div className="flex items-center">
           <Image src="/images/logo.png" alt="Logo" width={50} height={50} />
-          <h1 className="text-2xl font-bold ml-2">Doctor of Truth</h1>
+          <h1 className="text-2xl font-bold ml-2">Doctors of Truth</h1>
         </div>
         <div className="flex-grow flex justify-center items-center">
           <form onSubmit={handleSearch} className="flex items-center bg-gray-100 shadow-md rounded-full overflow-hidden px-2">

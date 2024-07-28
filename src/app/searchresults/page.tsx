@@ -27,6 +27,8 @@ export default function SearchResult() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCategoryId, setSearchCategoryId] = useState('');
   const [posts, setPosts] = useState<Post[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  //const [pageNumbers, setPageNumbers] = useState([]);
   const initialized = useRef(false);
   const [page, setPage] = useState(1);
   useEffect(() => {
@@ -44,11 +46,19 @@ export default function SearchResult() {
     try {
       let postsRes: any;
       if (categoryId == ''){
-        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=2&search=${searchQuery}`);
+        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=10&search=${searchQuery}`);
       } else {
-        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=2&search=${searchQuery}&categories=${categoryId}`);
+        postsRes = await api.get(`wp/v2/posts?page=${newPage}&per_page=10&search=${searchQuery}&categories=${categoryId}`);
       }
       const postsData = postsRes.data;
+
+      const tPages = parseInt(postsRes.headers['x-wp-totalpages'], 10);
+      setTotalPages(tPages);
+      // const pNumbers: number[] = [];
+      // for (let i: number = 1; i <= totalPages; i++) {
+      //   pNumbers.push(i);
+      // }
+      //setPageNumbers(pNumbers);
       // Fetch authors data for each post
       const authorPromises = postsData.map(async (post: Post) => {
         const authorRes = await api.get(`wp/v2/users/${post.author}`);
@@ -128,7 +138,27 @@ export default function SearchResult() {
                   {page > 1 && (
                     <button onClick={() => handlePageChange(page - 1)}>Previous</button>
                   )}
-                  <button onClick={() => handlePageChange(page + 1)}>Next</button>
+                  
+                  {( page < totalPages) && (
+                    <button onClick={() => handlePageChange(page + 1)}>Next</button>
+                  )}
+                  {totalPages > 1 && (
+                    <nav>
+                      <ul className="flex flex-wrap list-none p-0 justify-center items-center">
+                        {(() => {
+                          const items = [];
+                          for (let i = 1; i <= totalPages; i++) {
+                            items.push(
+                              <li key={i} className={`mx-1 ${i === page ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'} border border-blue-500 rounded`}>
+                                <button onClick={() => handlePageChange(i)} className="block px-2 py-0 text-center">{i}</button>
+                              </li>
+                            );
+                          }
+                          return items;
+                        })()}
+                      </ul>
+                    </nav>
+                )}
                 </div>
             </ul>
 
