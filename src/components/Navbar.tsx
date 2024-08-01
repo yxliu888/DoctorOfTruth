@@ -40,7 +40,7 @@ const Navbar = ({ query, onQueryChange, handleSubmit }: NavbarProps) => {
         </form>
       </div>
       <div className="flex items-center space-x-4">
-        <a href="http://54.91.90.2/login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="https://www.spiritai.net/login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Join the Community
         </a>
       </div>

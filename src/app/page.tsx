@@ -21,7 +21,7 @@ export default function Home() {
     <main className="relative flex min-h-screen flex-col items-center justify-center p-4 bg-gray-100">
 
       <div className="absolute top-4 right-4">
-        <Link href="http://54.91.90.2/login" passHref>
+        <Link href="https://www.spiritai.net/login" passHref>
           <button className="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Join the Community
           </button>

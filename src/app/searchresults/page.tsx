@@ -54,11 +54,7 @@ export default function SearchResult() {
 
       const tPages = parseInt(postsRes.headers['x-wp-totalpages'], 10);
       setTotalPages(tPages);
-      // const pNumbers: number[] = [];
-      // for (let i: number = 1; i <= totalPages; i++) {
-      //   pNumbers.push(i);
-      // }
-      //setPageNumbers(pNumbers);
+
       // Fetch authors data for each post
       const authorPromises = postsData.map(async (post: Post) => {
         const authorRes = await api.get(`wp/v2/users/${post.author}`);
