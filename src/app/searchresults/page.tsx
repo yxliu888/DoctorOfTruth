@@ -19,7 +19,7 @@ export interface Post {
   author_name?: string; // Optional, to store author's name
   date: string;
   featured_media: number;
-  jetpack_featured_media_url: string;
+  featured_image_url: string;
 }
 
 export default function SearchResult() {
@@ -59,6 +59,11 @@ export default function SearchResult() {
       const authorPromises = postsData.map(async (post: Post) => {
         const authorRes = await api.get(`wp/v2/users/${post.author}`);
         post.author_name = authorRes.data.name; // Assuming you want to display the author's name
+
+        if (post.featured_media) {
+          const mediaResponse = await api.get(`wp/v2/media/${post.featured_media}`);
+          post.featured_image_url = mediaResponse.data.source_url;
+        }
         return post;
       });
       setPosts(await Promise.all(authorPromises));
@@ -91,16 +96,16 @@ export default function SearchResult() {
       <main className="flex flex-1 bg-#f8fafc">
         <CategoryNav onCategorySelect={categorySelect}/>
         <div className="w-full max-w-4xl p-6 ">
-          <h1 className="text-4xl font-semibold mb-4">Search Results:</h1>
+          <h1 className="text-4xl font-semibold mb-10">Search Results:</h1>
           {posts.length > 0 ? (
             <ul className="list-disc pl-5 ">
               {posts.map(post => (
                  <Link key={post.id} href={`/papers/${post.id}`} passHref>
-                  <div className='w-full lg:flex lg:mx-2 md:mx-2 h-22'>
+                  <div className='w-full lg:flex lg:mx-2 md:mx-2 h-22 mb-6'>
                    {post.featured_media ? (
                      <div className="aspect-w-10 aspect-h-6">
                        <Image
-                         src={post.jetpack_featured_media_url}
+                         src={post.featured_image_url}
                          alt={post.title.rendered}
                          className="object-cover object-center rounded"
                          width={100}
@@ -122,9 +127,9 @@ export default function SearchResult() {
                    )}
                     <div className='ml-4'>
                       <h2 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 h-8">{post.title.rendered}</h2>
-                        <div className='flex flex-col justify-end h-12 text-right'>
+                        <div className='flex flex-col justify-end h-14 text-left text-lg'>
                           <p>{ post.author_name }</p>
-                          <p>{ post.date }</p>
+                          <p className='text-xs'>{ post.date }</p>
                         </div>
                     </div>
                   </div>

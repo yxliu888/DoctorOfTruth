@@ -85,10 +85,13 @@ export default function Comments({ postId }: CommentProps) {
       {showReplyBox && ( */}
       <AddComment postId={postId} commentParent='0' updateComments={updateComments}/>
       {/* } */}
-      {comments.map((comment: any) => (
-          <CommentComponent key={comment.id} postId={postId} comment={comment} />
-        ))
-      }
+      <h1 className='mb-6 text-2xl mt-8 font-bold '>Comments</h1>
+      <div className='ml-10'>
+        {comments.map((comment: any) => (
+            <CommentComponent key={comment.id} postId={postId} comment={comment} />
+          ))
+        }
+      </div>
     </div>
   );
 }

@@ -37,31 +37,42 @@ const CommentComponent: React.FC<CommentProps> = ({ postId, comment }: CommentPr
     }
   };
   return (
-<div className="pl-4">
-	<div className="wp-block-group is-layout-flow wp-block-group-is-layout-flow" >
-		<div className="wp-block-group is-nowrap is-layout-flex wp-container-core-group-is-layout-11 wp-block-group-is-layout-flex">
+  <div className="p-3 mb-6 mt-2 border border-gray-300 ">
+    <h1></h1>
+    <div className="wp-block-group is-layout-flow wp-block-group-is-layout-flow" >
+      <div className="wp-block-group is-nowrap is-layout-flex wp-container-core-group-is-layout-11 wp-block-group-is-layout-flex">
 			<div className="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-				<div className="font-semibold">{curComment.author_name}</div>
-				<div className="wp-block-comment-date">{formatDate(comment.date)}</div>
+        <div className="wp-block-comment-date">Date: {formatDate(comment.date)}</div>
+				<div className="font-semibold text-xl">User: {curComment.author_name}</div>
 			</div>
-		</div>
-		<div className="comment-content" dangerouslySetInnerHTML={{ __html: curComment.content.rendered }} />
-	</div>
-  { showReplyBox ? 
-    (<button className='text-gray-600' onClick={cancelReplyBox}>Cancel Reply</button>) : 
-    (<button className='text-gray-600' onClick={showingReplyBox}>Reply</button>)
-  }
-  { showReplyBox && (
-    <AddComment postId={postId} commentParent={comment.id.toString()} updateComments={updateComments} author={curComment.author_name}/>)
-}
-  {childrenComment && (
-    <div className="comment-children">
-      {childrenComment.map(child => (
-      <CommentComponent key={child.id} postId={postId} comment={child} />
-      ))}
+
+      </div>
+      <div className="comment-content text-xl ml-12" dangerouslySetInnerHTML={{ __html: curComment.content.rendered }} />
     </div>
-  )} 
-</div>
+    { showReplyBox ? 
+    (
+      <button className='bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700 mt-2' onClick={cancelReplyBox}>
+        Cancel Reply
+      </button>
+    ) : 
+    (
+      <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 mt-2' onClick={showingReplyBox}>
+        Reply
+      </button>
+    )
+  }
+
+    { showReplyBox && (
+      <AddComment postId={postId} commentParent={comment.id.toString()} updateComments={updateComments} author={curComment.author_name}/>)
+  }
+    {childrenComment && (
+      <div className="comment-children">
+        {childrenComment.map(child => (
+        <CommentComponent key={child.id} postId={postId} comment={child} />
+        ))}
+      </div>
+    )} 
+  </div>
 )};
 
 export default CommentComponent;

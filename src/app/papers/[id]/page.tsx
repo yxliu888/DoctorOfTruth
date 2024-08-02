@@ -78,8 +78,8 @@ export default function PaperPage({params}: any) {
             </div>
           }
           <div className="border-t border-gray-400 mt-10"></div>
-          <div className="flex items-center justify-center font-semibold mb-8 mt-20">
-            <div>Comments</div>
+          <div className="flex items-center justify-left font-semibold mb-8 mt-4 text-2xl">
+            <div>Leave a comment</div>
           </div>
           <div className="md:justify-between">
             <Comments key={post?.id} postId={post?.id} />
